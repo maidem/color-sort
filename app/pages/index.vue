@@ -14,6 +14,25 @@ function create() {
 function remove(id: string) {
   if (confirm('Projekt wirklich löschen?')) store.deleteProject(id)
 }
+
+const editingId = ref<string | null>(null)
+const editDraft = ref('')
+
+function startRename(id: string, current: string) {
+  editingId.value = id
+  editDraft.value = current
+}
+
+function commitRename() {
+  if (!editingId.value) return
+  const name = editDraft.value.trim()
+  if (name) store.renameProject(editingId.value, name)
+  editingId.value = null
+}
+
+function cancelRename() {
+  editingId.value = null
+}
 </script>
 
 <template>
@@ -48,11 +67,21 @@ function remove(id: string) {
           :key="p.id"
           class="flex items-center justify-between border-2 border-black rounded bg-white px-4 py-3"
         >
-          <NuxtLink :to="`/projects/${p.id}`" class="flex-1">
+          <template v-if="editingId === p.id">
+            <input
+              v-model="editDraft"
+              autofocus
+              class="flex-1 mr-3 text-lg border-2 border-black rounded px-2 py-1 bg-white outline-none"
+              @keydown.enter="commitRename"
+              @keydown.esc="cancelRename"
+              @blur="commitRename"
+            />
+          </template>
+          <NuxtLink v-else :to="`/projects/${p.id}`" class="flex-1">
             <div class="text-lg">{{ p.name }}</div>
             <div class="text-xs opacity-60">{{ p.colors.length }} Farben</div>
           </NuxtLink>
-          <div class="flex gap-1">
+          <div class="flex gap-1 items-center">
             <div class="flex -space-x-1 mr-3">
               <span
                 v-for="c in p.colors.slice(0, 6)"
@@ -61,6 +90,11 @@ function remove(id: string) {
                 :style="{ background: c.hex }"
               />
             </div>
+            <button
+              v-if="editingId !== p.id"
+              class="text-xs px-2 py-1 border border-black rounded hover:bg-neutral-100"
+              @click="startRename(p.id, p.name)"
+            >Umbenennen</button>
             <button
               class="text-xs px-2 py-1 border border-black rounded hover:bg-red-100"
               @click="remove(p.id)"

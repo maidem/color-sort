@@ -107,14 +107,54 @@ function hexToRgb(hex: string) {
     b: parseInt(v.slice(4, 6), 16)
   }
 }
+
+const editingName = ref(false)
+const nameDraft = ref('')
+const nameInput = ref<HTMLInputElement | null>(null)
+
+function startRename() {
+  if (!project.value) return
+  nameDraft.value = project.value.name
+  editingName.value = true
+  nextTick(() => nameInput.value?.select())
+}
+
+function commitRename() {
+  if (!project.value || !editingName.value) return
+  const next = nameDraft.value.trim()
+  if (next && next !== project.value.name) {
+    store.renameProject(project.value.id, next)
+  }
+  editingName.value = false
+}
+
+function cancelRename() {
+  editingName.value = false
+}
 </script>
 
 <template>
   <div v-if="project" class="max-w-5xl mx-auto p-6">
     <header class="flex items-center justify-between mb-6">
-      <div>
+      <div class="min-w-0">
         <NuxtLink to="/" class="text-xs underline opacity-70">← Projekte</NuxtLink>
-        <h1 class="text-3xl">{{ project.name }}</h1>
+        <div v-if="!editingName" class="flex items-center gap-2">
+          <h1 class="text-3xl truncate">{{ project.name }}</h1>
+          <button
+            class="text-xs px-2 py-1 border border-black rounded hover:bg-neutral-100"
+            title="Umbenennen"
+            @click="startRename"
+          >Umbenennen</button>
+        </div>
+        <input
+          v-else
+          ref="nameInput"
+          v-model="nameDraft"
+          class="text-3xl border-2 border-black rounded px-2 py-1 bg-white outline-none"
+          @keydown.enter="commitRename"
+          @keydown.esc="cancelRename"
+          @blur="commitRename"
+        />
       </div>
       <div class="flex gap-2">
         <button
