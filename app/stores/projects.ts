@@ -11,6 +11,7 @@ export interface Project {
   name: string
   createdAt: number
   colors: ColorEntry[]
+  background?: string
 }
 
 const STORAGE_KEY = 'color-sort:projects:v1'
@@ -49,10 +50,15 @@ export const useProjects = defineStore('projects', {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.projects))
     },
     createProject(name: string): Project {
-      const p: Project = { id: uid(), name: name.trim() || 'Unbenannt', createdAt: Date.now(), colors: [] }
+      const p: Project = { id: uid(), name: name.trim() || 'Unbenannt', createdAt: Date.now(), colors: [], background: '#fafaf7' }
       this.projects.unshift(p)
       this.persist()
       return p
+    },
+    setBackground(projectId: string, hex: string) {
+      const p = this.byId(projectId); if (!p) return
+      p.background = hex
+      this.persist()
     },
     renameProject(id: string, name: string) {
       const p = this.byId(id); if (!p) return

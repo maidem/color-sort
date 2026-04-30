@@ -52,6 +52,19 @@ function autoSort(dir: 'light-to-dark' | 'dark-to-light') {
   store.sortByBrightness(project.value.id, dir)
 }
 
+const background = computed({
+  get: () => project.value?.background ?? '#fafaf7',
+  set: (val: string) => project.value && store.setBackground(project.value.id, val)
+})
+
+const showPdfDialog = ref(false)
+const pdfWithBackground = ref(true)
+
+function openPdfDialog() {
+  pdfWithBackground.value = true
+  showPdfDialog.value = true
+}
+
 function exportPdf() {
   if (!project.value) return
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
@@ -65,7 +78,18 @@ function exportPdf() {
   const labelH = 8
   const rowH = swatchH + labelH + gap
 
+  const drawBackground = () => {
+    if (!pdfWithBackground.value) return
+    const bg = hexToRgb(background.value)
+    doc.setFillColor(bg.r, bg.g, bg.b)
+    doc.rect(0, 0, pageW, pageH, 'F')
+  }
+  drawBackground()
+
+  const labelColor = pdfWithBackground.value ? hexToRgb(contrastText(background.value)) : { r: 0, g: 0, b: 0 }
+
   doc.setFontSize(20)
+  doc.setTextColor(labelColor.r, labelColor.g, labelColor.b)
   doc.text(project.value.name, margin, margin - 2)
   let x = margin
   let y = margin + 6
@@ -74,6 +98,7 @@ function exportPdf() {
   for (const c of project.value.colors) {
     if (y + rowH > pageH - margin) {
       doc.addPage()
+      drawBackground()
       y = margin
       x = margin
       col = 0
@@ -84,7 +109,7 @@ function exportPdf() {
     doc.setLineWidth(0.5)
     doc.rect(x, y, cellW, swatchH, 'FD')
     doc.setFontSize(11)
-    doc.setTextColor(0)
+    doc.setTextColor(labelColor.r, labelColor.g, labelColor.b)
     doc.text(c.code, x + cellW / 2, y + swatchH + 5, { align: 'center' })
 
     col++
@@ -97,6 +122,7 @@ function exportPdf() {
     }
   }
   doc.save(`${project.value.name}.pdf`)
+  showPdfDialog.value = false
 }
 
 function hexToRgb(hex: string) {
@@ -134,8 +160,13 @@ function cancelRename() {
 </script>
 
 <template>
-  <div v-if="project" class="max-w-5xl mx-auto p-6">
-    <header class="flex items-center justify-between mb-6">
+  <div
+    v-if="project"
+    class="min-h-screen transition-colors"
+    :style="{ background: background, color: contrastText(background) }"
+  >
+    <div class="max-w-5xl mx-auto p-6">
+    <header class="flex items-center justify-between mb-6 gap-4 flex-wrap">
       <div class="min-w-0">
         <NuxtLink to="/" class="text-xs underline opacity-70">← Projekte</NuxtLink>
         <div v-if="!editingName" class="flex items-center gap-2">
@@ -156,23 +187,41 @@ function cancelRename() {
           @blur="commitRename"
         />
       </div>
-      <div class="flex gap-2">
+      <div class="flex gap-2 items-center flex-wrap">
+        <label
+          class="flex items-center gap-2 text-sm border-2 border-black rounded px-2 py-1 bg-white text-black cursor-pointer"
+          title="Hintergrundfarbe wählen"
+        >
+          <span>Hintergrund</span>
+          <input
+            type="color"
+            :value="background"
+            class="w-8 h-6 border-0 bg-transparent cursor-pointer"
+            @input="background = ($event.target as HTMLInputElement).value"
+          />
+          <button
+            type="button"
+            class="text-xs underline"
+            title="Zurücksetzen"
+            @click.stop="background = '#fafaf7'"
+          >Reset</button>
+        </label>
         <button
-          class="text-sm border-2 border-black rounded px-3 py-1 bg-white hover:bg-neutral-100"
+          class="text-sm border-2 border-black rounded px-3 py-1 bg-white text-black hover:bg-neutral-100"
           @click="autoSort('light-to-dark')"
         >Hell → Dunkel</button>
         <button
-          class="text-sm border-2 border-black rounded px-3 py-1 bg-white hover:bg-neutral-100"
+          class="text-sm border-2 border-black rounded px-3 py-1 bg-white text-black hover:bg-neutral-100"
           @click="autoSort('dark-to-light')"
         >Dunkel → Hell</button>
         <button
           class="text-sm border-2 border-black rounded px-3 py-1 bg-black text-white"
-          @click="exportPdf"
+          @click="openPdfDialog"
         >PDF Export</button>
       </div>
     </header>
 
-    <section class="mb-6 border-2 border-black rounded bg-white p-4">
+    <section class="mb-6 border-2 border-black rounded bg-white text-black p-4">
       <form class="flex flex-wrap gap-2 items-end" @submit.prevent="add">
         <div class="flex flex-col">
           <label class="text-xs opacity-70">Farbcode (z. B. Y02, RV05 oder #ff8800)</label>
@@ -230,6 +279,40 @@ function cancelRename() {
         </template>
       </draggable>
     </section>
+    </div>
+
+    <Teleport to="body">
+      <div
+        v-if="showPdfDialog"
+        class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+        @click.self="showPdfDialog = false"
+      >
+        <div class="bg-white text-black border-2 border-black rounded p-6 w-[90%] max-w-md">
+          <h2 class="text-2xl mb-4">PDF Export</h2>
+          <label class="flex items-center gap-2 mb-2 cursor-pointer">
+            <input v-model="pdfWithBackground" type="checkbox" class="w-4 h-4" />
+            <span>Hintergrundfarbe übernehmen</span>
+            <span
+              class="inline-block w-5 h-5 border border-black rounded"
+              :style="{ background: background }"
+            />
+          </label>
+          <p class="text-xs opacity-70 mb-6">
+            Aktuell: {{ background }}
+          </p>
+          <div class="flex justify-end gap-2">
+            <button
+              class="text-sm border-2 border-black rounded px-3 py-1 bg-white hover:bg-neutral-100"
+              @click="showPdfDialog = false"
+            >Abbrechen</button>
+            <button
+              class="text-sm border-2 border-black rounded px-3 py-1 bg-black text-white"
+              @click="exportPdf"
+            >Exportieren</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
   <div v-else class="p-10 text-center">
     <p class="opacity-70">Projekt nicht gefunden.</p>
