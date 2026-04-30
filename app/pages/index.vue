@@ -65,7 +65,8 @@ function cancelRename() {
         <li
           v-for="p in store.projects"
           :key="p.id"
-          class="flex items-center justify-between border-2 border-black rounded bg-white px-4 py-3"
+          class="flex items-center justify-between border-2 border-black rounded px-4 py-3 transition-colors"
+          :style="{ background: p.background || '#ffffff', color: contrastText(p.background || '#ffffff') }"
         >
           <template v-if="editingId === p.id">
             <input
@@ -92,11 +93,11 @@ function cancelRename() {
             </div>
             <button
               v-if="editingId !== p.id"
-              class="text-xs px-2 py-1 border border-black rounded hover:bg-neutral-100"
+              class="text-xs px-2 py-1 border border-black rounded bg-white text-black hover:bg-neutral-100"
               @click="startRename(p.id, p.name)"
             >Umbenennen</button>
             <button
-              class="text-xs px-2 py-1 border border-black rounded hover:bg-red-100"
+              class="text-xs px-2 py-1 border border-black rounded bg-white text-black hover:bg-red-100"
               @click="remove(p.id)"
             >Löschen</button>
           </div>
