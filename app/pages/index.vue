@@ -1,37 +1,37 @@
 <script setup lang="ts">
-const store = useProjects()
-onMounted(() => store.hydrate())
+const store = useProjects();
+onMounted(() => store.hydrate());
 
-const newName = ref('')
+const newName = ref("");
 function create() {
-  const name = newName.value.trim()
-  if (!name) return
-  const p = store.createProject(name)
-  newName.value = ''
-  navigateTo(`/projects/${p.id}`)
+  const name = newName.value.trim();
+  if (!name) return;
+  const p = store.createProject(name);
+  newName.value = "";
+  navigateTo(`/projects/${p.id}`);
 }
 
 function remove(id: string) {
-  if (confirm('Projekt wirklich löschen?')) store.deleteProject(id)
+  if (confirm("Projekt wirklich löschen?")) store.deleteProject(id);
 }
 
-const editingId = ref<string | null>(null)
-const editDraft = ref('')
+const editingId = ref<string | null>(null);
+const editDraft = ref("");
 
 function startRename(id: string, current: string) {
-  editingId.value = id
-  editDraft.value = current
+  editingId.value = id;
+  editDraft.value = current;
 }
 
 function commitRename() {
-  if (!editingId.value) return
-  const name = editDraft.value.trim()
-  if (name) store.renameProject(editingId.value, name)
-  editingId.value = null
+  if (!editingId.value) return;
+  const name = editDraft.value.trim();
+  if (name) store.renameProject(editingId.value, name);
+  editingId.value = null;
 }
 
 function cancelRename() {
-  editingId.value = null
+  editingId.value = null;
 }
 </script>
 
@@ -60,13 +60,18 @@ function cancelRename() {
 
     <section>
       <h2 class="text-xl mb-3">Projekte</h2>
-      <p v-if="!store.projects.length" class="opacity-60 text-sm">Noch keine Projekte.</p>
+      <p v-if="!store.projects.length" class="opacity-60 text-sm">
+        Noch keine Projekte.
+      </p>
       <ul class="space-y-2">
         <li
           v-for="p in store.projects"
           :key="p.id"
           class="flex items-center justify-between border-2 border-black rounded px-4 py-3 transition-colors"
-          :style="{ background: p.background || '#ffffff', color: contrastText(p.background || '#ffffff') }"
+          :style="{
+            background: p.background || '#ffffff',
+            color: contrastText(p.background || '#ffffff'),
+          }"
         >
           <template v-if="editingId === p.id">
             <input
@@ -95,11 +100,15 @@ function cancelRename() {
               v-if="editingId !== p.id"
               class="text-xs px-2 py-1 border border-black rounded bg-white text-black hover:bg-neutral-100"
               @click="startRename(p.id, p.name)"
-            >Umbenennen</button>
+            >
+              Umbenennen
+            </button>
             <button
               class="text-xs px-2 py-1 border border-black rounded bg-white text-black hover:bg-red-100"
               @click="remove(p.id)"
-            >Löschen</button>
+            >
+              Löschen
+            </button>
           </div>
         </li>
       </ul>

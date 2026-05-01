@@ -52,12 +52,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v2
-        with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-
       - name: Trigger Coolify deployment
+        if: ${{ secrets.COOLIFY_WEBHOOK != '' }}
         run: |
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \

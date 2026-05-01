@@ -1,14 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body, #__nuxt {
+html,
+body,
+#__nuxt {
   height: 100%;
   background: #fafaf7;
   color: #1a1a1a;
-  font-family: 'Patrick Hand', system-ui, sans-serif;
+  font-family: "Patrick Hand", system-ui, sans-serif;
 }
 
 .swatch {
