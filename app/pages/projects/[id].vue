@@ -125,7 +125,13 @@ function exportPdf() {
       x += cellW + gap;
     }
   }
-  doc.save(`${project.value.name}.pdf`);
+  const blob = doc.output("blob");
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${project.value.name}.pdf`;
+  a.click();
+  URL.revokeObjectURL(url);
   showPdfDialog.value = false;
 }
 
@@ -174,14 +180,14 @@ function cancelRename() {
     class="min-h-screen transition-colors"
     :style="{ background: background, color: contrastText(background) }"
   >
-    <div class="max-w-5xl mx-auto p-6">
-      <header class="flex items-center justify-between mb-6 gap-4 flex-wrap">
-        <div class="min-w-0">
-          <NuxtLink to="/" class="text-xs underline opacity-70"
-            >← Projekte</NuxtLink
-          >
-          <div v-if="!editingName" class="flex items-center gap-2">
-            <h1 class="text-3xl truncate">{{ project.name }}</h1>
+    <div class="max-w-5xl mx-auto p-4 sm:p-6">
+      <header class="mb-6">
+        <NuxtLink to="/" class="text-xs underline opacity-70"
+          >← Projekte</NuxtLink
+        >
+        <div class="mt-1 mb-3">
+          <div v-if="!editingName" class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-2xl sm:text-3xl truncate">{{ project.name }}</h1>
             <button
               class="text-xs px-2 py-1 border border-black rounded hover:bg-neutral-100"
               title="Umbenennen"
@@ -194,7 +200,7 @@ function cancelRename() {
             v-else
             ref="nameInput"
             v-model="nameDraft"
-            class="text-3xl border-2 border-black rounded px-2 py-1 bg-white outline-none"
+            class="text-2xl sm:text-3xl border-2 border-black rounded px-2 py-1 bg-white outline-none w-full"
             @keydown.enter="commitRename"
             @keydown.esc="cancelRename"
             @blur="commitRename"
@@ -245,41 +251,47 @@ function cancelRename() {
       <section
         class="mb-6 border-2 border-black rounded bg-white text-black p-4"
       >
-        <form class="flex flex-wrap gap-2 items-end" @submit.prevent="add">
-          <div class="flex flex-col">
-            <label class="text-xs opacity-70"
-              >Farbcode (z. B. Y02, RV05 oder #ff8800)</label
-            >
-            <input
-              v-model="code"
-              class="border-2 border-black rounded px-3 py-2 w-56 bg-white outline-none"
-              placeholder="Code …"
+        <form class="flex flex-col gap-3" @submit.prevent="add">
+          <div class="flex flex-wrap gap-2 items-end">
+            <div class="flex flex-col flex-1 min-w-[160px]">
+              <label class="text-xs opacity-70"
+                >Farbcode (z. B. Y02, RV05 oder #ff8800)</label
+              >
+              <input
+                v-model="code"
+                class="border-2 border-black rounded px-3 py-2 bg-white outline-none"
+                placeholder="Code …"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+              />
+            </div>
+            <div class="flex flex-col flex-1 min-w-[120px]">
+              <label class="text-xs opacity-70"
+                >Hex überschreiben (optional)</label
+              >
+              <input
+                v-model="hexOverride"
+                class="border-2 border-black rounded px-3 py-2 bg-white outline-none"
+                placeholder="#aabbcc"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="w-12 h-12 swatch shrink-0"
+              :style="{
+                background:
+                  detectedHex ||
+                  (hexOverride && isValidHex(hexOverride)
+                    ? normalizeHex(hexOverride)
+                    : '#eee'),
+              }"
+              :title="detectedHex || hexOverride"
             />
           </div>
-          <div class="flex flex-col">
-            <label class="text-xs opacity-70"
-              >Hex überschreiben (optional)</label
-            >
-            <input
-              v-model="hexOverride"
-              class="border-2 border-black rounded px-3 py-2 w-40 bg-white outline-none"
-              placeholder="#aabbcc"
-            />
-          </div>
-          <div
-            class="w-12 h-12 swatch"
-            :style="{
-              background:
-                detectedHex ||
-                (hexOverride && isValidHex(hexOverride)
-                  ? normalizeHex(hexOverride)
-                  : '#eee'),
-            }"
-            :title="detectedHex || hexOverride"
-          />
           <button
             type="submit"
-            class="border-2 border-black rounded px-4 py-2 bg-black text-white"
+            class="border-2 border-black rounded px-4 py-3 bg-black text-white w-full sm:w-auto"
           >
             Hinzufügen
           </button>
@@ -310,14 +322,16 @@ function cancelRename() {
                 :style="{ background: element.hex }"
               >
                 <button
-                  class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white border border-black text-xs opacity-0 group-hover:opacity-100"
+                  class="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-white border border-black text-xs opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                   title="Löschen"
                   @click.stop="remove(element.id)"
                 >
                   ×
                 </button>
               </div>
-              <div class="mt-1 text-lg tracking-wide">{{ element.code }}</div>
+              <div class="mt-1 text-base sm:text-lg tracking-wide">
+                {{ element.code }}
+              </div>
             </div>
           </template>
         </draggable>

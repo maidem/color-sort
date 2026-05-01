@@ -36,14 +36,14 @@ function cancelRename() {
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto p-6">
+  <div class="max-w-3xl mx-auto p-4 sm:p-6">
     <header class="mb-8">
-      <h1 class="text-4xl tracking-wide">Color Sort</h1>
+      <h1 class="text-3xl sm:text-4xl tracking-wide">Color Sort</h1>
       <p class="text-sm opacity-70">Marker-Farbpaletten verwalten</p>
     </header>
 
     <section class="mb-8">
-      <form class="flex gap-2" @submit.prevent="create">
+      <form class="flex flex-col sm:flex-row gap-2" @submit.prevent="create">
         <input
           v-model="newName"
           placeholder="Neues Projekt …"
@@ -51,7 +51,7 @@ function cancelRename() {
         />
         <button
           type="submit"
-          class="border-2 border-black rounded px-4 py-2 bg-black text-white hover:bg-neutral-800"
+          class="border-2 border-black rounded px-4 py-3 sm:py-2 bg-black text-white hover:bg-neutral-800"
         >
           Anlegen
         </button>
@@ -83,12 +83,16 @@ function cancelRename() {
               @blur="commitRename"
             />
           </template>
-          <NuxtLink v-else :to="`/projects/${p.id}`" class="flex-1">
-            <div class="text-lg">{{ p.name }}</div>
+          <NuxtLink
+            v-else
+            :to="`/projects/${p.id}`"
+            class="flex-1 min-w-0 mr-3"
+          >
+            <div class="text-lg truncate">{{ p.name }}</div>
             <div class="text-xs opacity-60">{{ p.colors.length }} Farben</div>
           </NuxtLink>
-          <div class="flex gap-1 items-center">
-            <div class="flex -space-x-1 mr-3">
+          <div class="flex gap-1 items-center shrink-0">
+            <div class="hidden sm:flex -space-x-1 mr-3">
               <span
                 v-for="c in p.colors.slice(0, 6)"
                 :key="c.id"
