@@ -44,3 +44,5 @@ Benötigte Secrets im Repository:
 
 In Coolify als "Docker Image" Application konfigurieren mit Image
 `ghcr.io/maidem/color-sort:latest` und Port `3000`.
+
+Deploy
