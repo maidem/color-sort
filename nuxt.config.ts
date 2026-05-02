@@ -15,10 +15,15 @@ export default defineNuxtConfig({
       title: "Color Sort",
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "robots", content: "noindex, nofollow, noarchive, nosnippet" },
+        { name: "googlebot", content: "noindex, nofollow" },
       ],
     },
   },
   nitro: {
     preset: "node-server",
+    externals: {
+      external: ["better-sqlite3"],
+    },
   },
 });

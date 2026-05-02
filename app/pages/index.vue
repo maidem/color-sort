@@ -2,6 +2,13 @@
 const store = useProjects();
 onMounted(() => store.hydrate());
 
+async function logout() {
+  await $fetch("/api/auth/logout", { method: "POST" });
+  const authed = useState("authed", () => false);
+  authed.value = false;
+  await navigateTo("/login");
+}
+
 const newName = ref("");
 function create() {
   const name = newName.value.trim();
@@ -37,9 +44,17 @@ function cancelRename() {
 
 <template>
   <div class="max-w-3xl mx-auto p-4 sm:p-6">
-    <header class="mb-8">
-      <h1 class="text-3xl sm:text-4xl tracking-wide">Color Sort</h1>
-      <p class="text-sm opacity-70">Marker-Farbpaletten verwalten</p>
+    <header class="mb-8 flex items-start justify-between gap-4">
+      <div>
+        <h1 class="text-3xl sm:text-4xl tracking-wide">Color Sort</h1>
+        <p class="text-sm opacity-70">Marker-Farbpaletten verwalten</p>
+      </div>
+      <button
+        class="text-xs border border-black rounded px-3 py-1.5 hover:bg-neutral-100 shrink-0 mt-1"
+        @click="logout"
+      >
+        Abmelden
+      </button>
     </header>
 
     <section class="mb-8">
