@@ -1,381 +1,256 @@
-// Approximate Ohuhu marker hex values.
-// Covers all major sets (48 / 72 / 100 / 172 / 216 / 320).
-// Values are community-measured approximations – use the hex-override in the
-// app to correct individual colours if they don't match your physical marker.
+// Marker colour hex values – only the colours physically shown on the three cards:
+//   • Ohuhu Honolulu / Honolulu B / Honolulu S  (48 colours)
+//   • Ohuhu Honolulu S – Illustration          (60 colours)
+//   • HOTU 60 Colors Marker Set
+//
+// Hex values are community-measured approximations.
+// Use the hex-override in the app to correct individual colours if needed.
+//
+// Note: a few codes appear in both Ohuhu and HOTU with different colour names
+// (e.g. R213, WG04, BG03). The Ohuhu value is used for those entries.
 export const ohuhuPalette: Record<string, string> = {
-  // ── 0 Blender ────────────────────────────────────────────────────────────
-  "0": "#FFFFFF",
+  // ════════════════════════════════════════════════════════════════════════
+  // Ohuhu Honolulu / Honolulu B / Honolulu S  (48 colours)
+  // ════════════════════════════════════════════════════════════════════════
 
-  // ── Y  Yellow ────────────────────────────────────────────────────────────
-  Y000: "#FFFDE8",
-  Y00: "#FEFBE0",
-  Y02: "#F5F2C6",
-  Y06: "#F5E86B",
-  Y08: "#F5D942",
-  Y14: "#EAF1BD",
-  Y17: "#F7DC3C",
-  Y21: "#F5CC38",
-  Y23: "#F2B830",
-  Y26: "#F5A623",
-  Y28: "#FBE06D",
-  Y34: "#F0C040",
-  Y35: "#E8B830",
-  Y38: "#D4901C",
-  Y45: "#FAEDCA",
-  Y55: "#F8E1B9",
-  Y62: "#EFE6D6",
-  Y69: "#E6D3B8",
-  Y211: "#F6E0B4",
+  // ── Yellow ───────────────────────────────────────────────────────────────
+  Y02: "#F5F2C6", // Lemon Chiffon
+  Y14: "#EAF1BD", // Pale Lemon Yellow
+  Y45: "#FAEDCA", // Cream
+  Y55: "#F8E1B9", // Golden Champagne
+  Y62: "#EFE6D6", // Sandy Beige
+  Y69: "#E6D3B8", // Milk Tea
 
-  // ── YR  Yellow-Red / Orange ───────────────────────────────────────────────
-  YR01: "#FDDCBF",
-  YR02: "#FBCFAA",
-  YR04: "#FABC8A",
-  YR06: "#F6D9BA",
-  YR07: "#F8A866",
-  YR09: "#F69348",
-  YR11: "#FAD2BC",
-  YR14: "#E8B080",
-  YR15: "#E8A070",
-  YR16: "#F09058",
-  YR21: "#F4B860",
-  YR23: "#F0A030",
-  YR24: "#EE9020",
-  YR27: "#E27818",
-  YR29: "#F7C19D",
-  YR30: "#E08850",
-  YR31: "#D87840",
-  YR43: "#F7D1C9",
-  YR47: "#F5CBBA",
-  YR52: "#F0CFB5",
-  YR53: "#E8C0A0",
-  YR55: "#F9D2C9",
-  YR59: "#FABE9F",
-  YR61: "#E07030",
-  YR65: "#D86020",
-  YR68: "#C05010",
+  // ── Yellow-Red / Orange ──────────────────────────────────────────────────
+  YR06: "#F6D9BA", // Raw Cashew
+  YR11: "#FAD2BC", // Peachy Blush
+  YR43: "#F7D1C9", // Pale Cherry Pink
+  YR52: "#F0CFB5", // Cameo Rose
+  YR55: "#F9D2C9", // Pink Lemonade
+  YR59: "#FABE9F", // Cantaloupe
 
-  // ── R  Red ────────────────────────────────────────────────────────────────
-  R00: "#FBE4E4",
-  R01: "#F8D8D8",
-  R05: "#F7C0C0",
-  R07: "#F5AAAA",
-  R08: "#F29090",
-  R11: "#F8BABA",
-  R14: "#F4A0A0",
-  R15: "#FAD4DA",
-  R17: "#EC8888",
-  R19: "#E07070",
-  R20: "#F5A8A8",
-  R21: "#EE9090",
-  R22: "#FADAE1",
-  R24: "#E88080",
-  R25: "#E06868",
-  R27: "#F4B3C0",
-  R28: "#F198AF",
-  R29: "#D03050",
-  R30: "#F0A0B0",
-  R32: "#E88090",
-  R35: "#E06070",
-  R37: "#D05060",
-  R39: "#C04050",
-  R43: "#D87890",
-  R46: "#C05870",
-  R52: "#E898A0",
-  R54: "#EBDCE6",
-  R56: "#B87878",
-  R59: "#A05060",
-  R105: "#EE8891",
-  R210: "#F46A7A",
-  R213: "#EB4B62",
-  R706: "#673D82",
+  // ── Earth / Brown ────────────────────────────────────────────────────────
+  E05: "#DCE3C9", // Pale Moss
+  E14: "#E8E2D2", // Khaki Beige
+  E26: "#EBE8C7", // Pale Celery
+  E46: "#F3CEAA", // Coral Sand
+  E85: "#D8C2BE", // Cherry Taupe
+  E92: "#E3CDC6", // Ash Rose
 
-  // ── RV  Red-Violet ────────────────────────────────────────────────────────
-  RV00: "#F8E8F0",
-  RV02: "#F5D8EC",
-  RV04: "#F0BED8",
-  RV05: "#E8A2C8",
-  RV06: "#EC88A8",
-  RV09: "#DC6090",
-  RV10: "#F4C8DC",
-  RV11: "#F0B8D0",
-  RV13: "#E898C0",
-  RV14: "#E080B0",
-  RV17: "#D060A0",
-  RV19: "#C04890",
-  RV21: "#F0C0D8",
-  RV23: "#E8A8C8",
-  RV25: "#DDB2D6",
-  RV29: "#B83888",
-  RV32: "#E0B8D0",
-  RV33: "#DFBCE4",
-  RV34: "#E5C2E2",
-  RV42: "#C898C0",
-  RV55: "#B878B0",
-  RV57: "#B18BBF",
-  RV63: "#D0A0C0",
-  RV66: "#C090B8",
-  RV69: "#A86898",
-  RV212: "#CB287A",
-  RV314: "#8E266E",
+  // ── Red ──────────────────────────────────────────────────────────────────
+  R15: "#FAD4DA", // Lychee Juice
+  R22: "#FADAE1", // Ballet Pink
+  R27: "#F4B3C0", // Pink Satin
+  R54: "#EBDCE6", // Lavender Fog
 
-  // ── RY  Red-Yellow
-  RY311: "#98358D",
+  // ── Red-Violet ───────────────────────────────────────────────────────────
+  RV04: "#F0BED8", // Light Orchid
+  RV05: "#E8A2C8", // Pink Pearl
+  RV25: "#DDB2D6", // Rosy Lilac
+  RV33: "#DFBCE4", // Thistle
+  RV34: "#E5C2E2", // Faded Lilac
 
-  // ── V  Violet ─────────────────────────────────────────────────────────────
-  V01: "#F0E8F8",
-  V04: "#D8C8F0",
-  V05: "#C8B0E8",
-  V06: "#B898E0",
-  V09: "#9878D0",
-  V12: "#E0D0F0",
-  V14: "#DACEE6",
-  V15: "#9878C0",
-  V17: "#8060B0",
-  V20: "#D0C0E8",
-  V22: "#D9CFEC",
-  V25: "#9090D0",
-  V26: "#7878C0",
-  V28: "#6060B0",
-  V55: "#C0A8D8",
-  V91: "#E8E0F0",
-  V93: "#D0C8E8",
-  V95: "#B8A8D8",
-  V99: "#6848A8",
+  // ── Violet ───────────────────────────────────────────────────────────────
+  V14: "#DACEE6", // Pale Purple
+  V22: "#D9CFEC", // Lavender Wisp
 
-  // ── BV  Blue-Violet ───────────────────────────────────────────────────────
-  BV00: "#E8E8F8",
-  BV01: "#D8D8F5",
-  BV02: "#C8C8F0",
-  BV04: "#B0B0E8",
-  BV05: "#B2B6DE",
-  BV08: "#6868C0",
-  BV11: "#D8DCF0",
-  BV13: "#C0C8E8",
-  BV17: "#7888C8",
-  BV20: "#D8E0F0",
-  BV23: "#B0BEE0",
-  BV25: "#8898D0",
-  BV29: "#6068B8",
-  BV31: "#C8D0E8",
-  BV32: "#D0DEEF",
-  BV34: "#90A0D0",
-  BV35: "#A1C6E6",
+  // ── Blue-Violet ──────────────────────────────────────────────────────────
+  BV05: "#B2B6DE", // Cornflower
+  BV32: "#D0DEEF", // Pale Sky Blue
+  BV35: "#A1C6E6", // Arctic Blue
 
-  // ── B  Blue ───────────────────────────────────────────────────────────────
-  B00: "#E8F0F8",
-  B01: "#D8E8F5",
-  B02: "#C8DCF0",
-  B03: "#CDE3F0",
-  B04: "#90C0E0",
-  B05: "#86C5DA",
-  B08: "#71C2E8",
-  B12: "#A0C8E8",
-  B14: "#80B8E0",
-  B16: "#60A8D8",
-  B18: "#4090C8",
-  B21: "#CBD8E8",
-  B23: "#88B8D8",
-  B24: "#6898C8",
-  B26: "#4880B8",
-  B28: "#90B8D9",
-  B29: "#2868A0",
-  B32: "#A8C8E0",
-  B34: "#80A8D0",
-  B37: "#5888B8",
-  B39: "#3868A0",
-  B45: "#6098C0",
-  B52: "#B0C8D8",
-  B60: "#2050A0",
-  B63: "#184090",
-  B66: "#103080",
-  B69: "#082070",
-  B79: "#0C1860",
-  B91: "#C8D8E8",
-  B93: "#A8C0D8",
-  B95: "#88A8C8",
-  B97: "#5880A8",
-  B111: "#3CA1E1",
-  B114: "#96D4E7",
-  B115: "#226FB3",
-  B201: "#AEE2DC",
-  B203: "#92D3E3",
+  // ── Blue ─────────────────────────────────────────────────────────────────
+  B03: "#CDE3F0", // Frost
+  B05: "#86C5DA", // Robin Egg Blue
+  B21: "#CBD8E8", // Porcelain Blue
+  B28: "#90B8D9", // Smoke Blue
 
-  // ── BGY  Blue-Green-Yellow
-  BGY00: "#E4E7E8",
+  // ── Blue-Green / Teal ────────────────────────────────────────────────────
+  BG24: "#A9DFD1", // Sea Glass Blue
+  BG310: "#82CBB9", // Seafoam Green
 
-  // ── BG  Blue-Green / Teal ─────────────────────────────────────────────────
-  BG01: "#D0ECF0",
-  BG02: "#B8E4EC",
-  BG03: "#B4DDE2",
-  BG05: "#90D0E0",
-  BG07: "#68C0D0",
-  BG09: "#40B0C0",
-  BG10: "#C8E8EE",
-  BG11: "#A0D8E8",
-  BG13: "#70C8D8",
-  BG15: "#48B8C8",
-  BG18: "#20A0B8",
-  BG23: "#80C8D0",
-  BG24: "#A9DFD1",
-  BG32: "#90C0C8",
-  BG34: "#60A8B8",
-  BG45: "#4090A8",
-  BG49: "#2878A0",
-  BG57: "#186080",
-  BG70: "#D8F0EC",
-  BG72: "#A8E0D8",
-  BG75: "#70C8C0",
-  BG78: "#38A8A0",
-  BG96: "#C0E0DC",
-  BG310: "#82CBB9",
-  BG311: "#12B4B2",
+  // ── Green ────────────────────────────────────────────────────────────────
+  G34: "#CDE9C2", // Pale Green
+  G47: "#A1E198", // Spring Green
 
-  // ── G  Green ──────────────────────────────────────────────────────────────
-  G00: "#D8F0D8",
-  G02: "#C0E8C0",
-  G05: "#A0D8A0",
-  G07: "#80C880",
-  G09: "#60B860",
-  G12: "#B8E0B8",
-  G14: "#90D090",
-  G17: "#68C068",
-  G19: "#48B048",
-  G20: "#D0ECD0",
-  G21: "#A8DCA8",
-  G24: "#80CC80",
-  G25: "#60BC60",
-  G28: "#40A840",
-  G29: "#309030",
-  G34: "#CDE9C2",
-  G40: "#C8E8D0",
-  G43: "#88C898",
-  G46: "#58B070",
-  G47: "#A1E198",
-  G82: "#B8D8C0",
-  G85: "#98C8A0",
-  G94: "#D0E8D0",
-  G99: "#288840",
+  // ── Greys ────────────────────────────────────────────────────────────────
+  BGY00: "#E4E7E8", // Cashmere Grey
+  CG01: "#DFE2E4", // Cloud Grey
+  CG24: "#B7BDBF", // Grey
+  GG24: "#CBD0CD", // Wispy Grey
+  WG01: "#DFDEE5", // Lite Lavender
+  WG04: "#CDCCDA", // Icy Lavender  (HOTU: Warm Grey 4)
+  YGY02: "#E4E3E1", // Abalone Grey
+  YGY13: "#D9DFD8", // Oyster Grey
 
-  // ── YG  Yellow-Green
-  YG510: "#9CD368",
+  // ════════════════════════════════════════════════════════════════════════
+  // Ohuhu Honolulu S – Illustration  (60 colours)
+  // ════════════════════════════════════════════════════════════════════════
 
-  // ── E  Earth / Brown ──────────────────────────────────────────────────────
-  E00: "#F8EDE0",
-  E01: "#F5E4D8",
-  E02: "#F0D8C8",
-  E04: "#E8C8B0",
-  E05: "#DCE3C9",
-  E07: "#D8A878",
-  E08: "#C89060",
-  E09: "#B87848",
-  E11: "#F0E0D0",
-  E13: "#E8D0B8",
-  E14: "#E8E2D2",
-  E15: "#D8B888",
-  E17: "#C89868",
-  E18: "#B88050",
-  E19: "#A87038",
-  E21: "#E8C8A8",
-  E23: "#D8A870",
-  E25: "#C89058",
-  E26: "#EBE8C7",
-  E27: "#B07840",
-  E29: "#906030",
-  E31: "#E0B890",
-  E33: "#C89870",
-  E34: "#B88858",
-  E35: "#A07040",
-  E37: "#886030",
-  E39: "#705020",
-  E40: "#D8C0A0",
-  E41: "#C8A880",
-  E43: "#B89068",
-  E44: "#A07850",
-  E46: "#F3CEAA",
-  E47: "#886038",
-  E49: "#CC9576",
-  E51: "#D0C0A8",
-  E53: "#B8A080",
-  E55: "#A08868",
-  E57: "#886850",
-  E59: "#705038",
-  E60: "#C8A888",
-  E63: "#A88060",
-  E65: "#907048",
-  E66: "#BA8A7C",
-  E67: "#785830",
-  E69: "#604820",
-  E70: "#D0B898",
-  E71: "#B89878",
-  E74: "#A08060",
-  E77: "#886848",
-  E79: "#705030",
-  E81: "#D8C0A8",
-  E84: "#C09878",
-  E85: "#D8C2BE",
-  E87: "#906050",
-  E89: "#784840",
-  E92: "#E3CDC6",
-  E93: "#B09080",
-  E95: "#987060",
-  E97: "#806050",
-  E99: "#604030",
+  // ── Yellow ───────────────────────────────────────────────────────────────
+  // Y02 / Y69 shared with 48-colour set above
+  Y28: "#FBE06D", // Corn Yellow
+  Y43: "#F5E8C8", // Warm Beige
+  Y48: "#F8D8A8", // Light Apricot
+  Y213: "#E89020", // Dark Marigold
+  Y216: "#F0C878", // Caramel
+  Y315: "#C8B050", // Olive Yellow
+  Y416: "#C07A18", // Golden Brown
 
-  // ── N  Neutral Gray ───────────────────────────────────────────────────────
-  N0: "#F5F5F5",
-  N1: "#E8E8E8",
-  N2: "#D8D8D8",
-  N3: "#C8C8C8",
-  N4: "#B8B8B8",
-  N5: "#A0A0A0",
-  N6: "#888888",
-  N7: "#707070",
-  N8: "#585858",
-  N9: "#404040",
+  // ── Yellow-Red / Orange ──────────────────────────────────────────────────
+  // YR47 / YR59 shared above
+  YR02: "#FBCFAA", // Pen Silk
+  YR29: "#F7C19D", // Grapefruit
+  YR47: "#F5CBBA", // Dusty Peach
+  YR313: "#B06030", // Potato Brown
+  YR513: "#FABC90", // Papaya
 
-  // ── W  Warm Gray ──────────────────────────────────────────────────────────
-  W1: "#F0EDE8",
-  W2: "#E5E0D8",
-  W3: "#D8D0C8",
-  W4: "#C8C0B5",
-  W5: "#B8B0A0",
-  W6: "#A09888",
-  W7: "#888070",
-  W8: "#706858",
-  W9: "#585048",
+  // ── Earth / Brown ────────────────────────────────────────────────────────
+  // E66 / E49 / E81 shared or added here
+  E49: "#CC9576", // Honey Brown
+  E66: "#BA8A7C", // Light Fawn
+  E81: "#D8C0A8", // Spanish Pink
+  E313: "#786838", // Swamp Mud
+  E514: "#3C1C08", // Dark Chocolate
+  E612: "#983C20", // Brick Brown
+  E713: "#682018", // Red Bean
 
-  // ── C  Cool Gray ──────────────────────────────────────────────────────────
-  C1: "#EBF0F0",
-  C2: "#DCE5E8",
-  C3: "#CCD8DC",
-  C4: "#B8C8D0",
-  C5: "#A0B5C0",
-  C6: "#88A0AA",
-  C7: "#708890",
-  C8: "#587078",
-  C9: "#405860",
+  // ── Red ──────────────────────────────────────────────────────────────────
+  R28: "#F198AF", // Pink Carnation
+  R38: "#E05870", // Rose Pink
+  R210: "#F46A7A", // Deep Blush
+  R213: "#EB4B62", // Pomegranate  (HOTU: Rose Buvard)
+  R215: "#780818", // Morello Cherry
+  R015: "#B81428", // Crimson
 
-  // ── CG  Cool Gray (variant) ───────────────────────────────────────────────
-  CG01: "#DFE2E4",
-  CG02: "#C8CCD1",
-  CG24: "#B7BDBF",
+  // ── Red-Violet ───────────────────────────────────────────────────────────
+  RV57: "#B18BBF", // Dark Lilac
+  RV212: "#CB287A", // Rich Raspberry
+  RV311: "#682880", // Pansy
+  RV314: "#8E266E", // Grape Juice
 
-  // ── GG  Green-Gray ────────────────────────────────────────────────────────
-  GG11: "#A1A7AB",
-  GG24: "#CBD0CD",
+  // ── Violet ───────────────────────────────────────────────────────────────
+  V010: "#B090C8", // Faded Violet
+  V32: "#C0C0E0", // Icy Periwinkle
+  V38: "#5868A8", // Deep Periwinkle
 
-  // ── WG  Warm Gray (variant) ───────────────────────────────────────────────
-  WG01: "#DFDEE5",
-  WG02: "#D4D5DB",
-  WG04: "#CDCCDA",
+  // ── Blue-Violet ──────────────────────────────────────────────────────────
+  BV315: "#3858A8", // Cobalt Blue
+  BV58: "#5878C0", // Crystal Blue
 
-  // ── YGY  Yellow-Green-Yellow ──────────────────────────────────────────────
-  YGY02: "#E4E3E1",
-  YGY13: "#D9DFD8",
+  // ── Blue ─────────────────────────────────────────────────────────────────
+  B08: "#71C2E8", // Cotton Candy Blue
+  B111: "#3CA1E1", // Pool Blue
+  B115: "#226FB3", // Classic Blue
+  B315: "#2050A0", // Deep Cerulean
+  B415: "#162848", // Stormy Night
+
+  // ── Blue-Green / Teal ────────────────────────────────────────────────────
+  BG311: "#12B4B2", // Turquoise
+
+  // ── Green ────────────────────────────────────────────────────────────────
+  G310: "#20A040", // Shamrock Green
+  G313: "#188038", // Green
+  G315: "#106030", // Dark Emerald
+
+  // ── Yellow-Green ─────────────────────────────────────────────────────────
+  YG212: "#8A9830", // Guacamole
+  YG510: "#9CD368", // Bud Green
+
+  // ── Greys ────────────────────────────────────────────────────────────────
+  // CG01 / YGY02 shared above
+  BGY15: "#7888A0", // Blue Steel Grey
+  BGY24: "#9098A0", // Storm Grey
+  CG25: "#787878", // Deep Grey
+  GG05: "#6A7270", // Evergreen Fog
+  GG11: "#A1A7AB", // Fog Grey
+  WG10: "#ECECE8", // Porcelain
+  WG38: "#2A2020", // Caviar
+  YGY11: "#C0BAB0", // Collingwood Grey
+  "120": "#1A1A1A", // Black
+
+  // ════════════════════════════════════════════════════════════════════════
+  // HOTU 60 Colors Marker Set
+  // ════════════════════════════════════════════════════════════════════════
+
+  // ── Yellow / Orange / Brown ───────────────────────────────────────────────
+  Y003: "#F9E840", // Canaria Yellow
+  Y025: "#E4DC7A", // Pale Olive
+  Y107: "#F5F268", // Lightning Yellow
+  Y211: "#D8CC80", // Grayish Yellow
+  Y314: "#F2D020", // Yellow
+  Y503: "#F8EDD0", // Pale Cream
+  Y608: "#F06820", // Orange
+  Y611: "#C87040", // Morin
+  Y623: "#A86838", // Potato Brown
+  Y823: "#964030", // Henna
+  Y900: "#F8E4D8", // Baby Skin Pink
+  Y906: "#E83020", // Rouge Orange
+
+  // ── Red ──────────────────────────────────────────────────────────────────
+  // R213 / R706 shared with Ohuhu entries above
+  R043: "#703020", // Cameo Brown
+  R101: "#F4C49A", // Flesh
+  R105: "#EE8888", // Coral Pink
+  R107: "#DE4830", // Reddish Yellow
+  R218: "#E02840", // Geranium
+  R302: "#F5B0C0", // Fruit Pink
+  R304: "#F2BECE", // Pastel Rose
+  R400: "#F8ECEC", // Cherry White
+  R502: "#F08AA8", // Medium Pink
+  R503: "#F5C4D0", // Pastel Pink
+  R607: "#F04090", // Vivid Pink
+
+  // ── Red-Violet / Violet ───────────────────────────────────────────────────
+  R702: "#886080", // Mauve Shadow
+  R703: "#D0ACDC", // Pastel Violet
+  R706: "#673D82", // Deep Violet
+  R839: "#582880", // Pansy (HOTU)
+  R910: "#B8BEDD", // Pastel Grey Blue
+
+  // ── Blue ─────────────────────────────────────────────────────────────────
+  // B201 / B203 shared below
+  B002: "#DCE8F5", // Pale Blue Light
+  B003: "#68BAD8", // Sky Blue
+  B114: "#7AAAD8", // Cornflower
+  B118: "#2840A8", // Ultramarine
+  B201: "#AEE2DC", // Mint Blue
+  B203: "#92D3E3", // Pastel Blue
+  B205: "#4480C0", // Cerulean Blue
+  B227: "#1C3270", // Indian Blue
+  B258: "#181C38", // Blue Black
+
+  // ── Blue-Green / Teal ────────────────────────────────────────────────────
+  // BG03 Pastel Blue (HOTU) – same code as Ohuhu BG family, using Ohuhu value
+  BG03: "#B4DDE2", // Pastel Blue
+
+  // ── Green ────────────────────────────────────────────────────────────────
+  G012: "#A0C898", // Horizon Green
+  G318: "#30A068", // Ocean Green
+  G406: "#28A050", // Veronese Green
+  G515: "#48C038", // Grass Green
+  G523: "#C0E898", // Milk Green
+  G702: "#E0F0C8", // Sugarcane
+  G902: "#D4E8A8", // Anise
+  G915: "#A8D020", // Chartreuse Green
+  G965: "#285860", // Sea Pine
+
+  // ── Warm Grey ─────────────────────────────────────────────────────────────
+  WG00: "#F0EEEA", // Warm Grey 0
+  WG02: "#D8D2CC", // Warm Grey 2
+  WG06: "#A8A098", // Warm Grey 6
+
+  // ── Neutral / Toner / Cool Grey ───────────────────────────────────────────
+  NG02: "#D0CCCC", // Neutral Grey 2
+  TG02: "#DED8C8", // Toner Grey 2
+  CGII01: "#E8E8EE", // Cool Grey II 1
+  CGII03: "#BEBEC8", // Cool Grey II 3
+  CGII05: "#9090A0", // Cool Grey II 5
+  CGII07: "#686878", // Cool Grey II 7
 
   // ── Special ───────────────────────────────────────────────────────────────
-  "120": "#1A1A1A",
+  "0": "#FFFFFF", // Colorless Blender
+  S: "#181818", // Black
 };
 
 export function normalizeCode(input: string): string {
