@@ -25,6 +25,37 @@ function remove(id: string) {
 const editingId = ref<string | null>(null);
 const editDraft = ref("");
 
+// Drag & drop
+const dragIndex = ref<number | null>(null);
+const dragOverIndex = ref<number | null>(null);
+
+function onDragStart(e: DragEvent, index: number) {
+  dragIndex.value = index;
+  e.dataTransfer!.effectAllowed = "move";
+}
+
+function onDragOver(e: DragEvent, index: number) {
+  e.preventDefault();
+  e.dataTransfer!.dropEffect = "move";
+  dragOverIndex.value = index;
+}
+
+function onDrop(e: DragEvent, index: number) {
+  e.preventDefault();
+  if (dragIndex.value === null || dragIndex.value === index) return;
+  const ordered = [...store.projects];
+  const [item] = ordered.splice(dragIndex.value, 1);
+  ordered.splice(index, 0, item);
+  store.reorderProjects(ordered);
+  dragIndex.value = null;
+  dragOverIndex.value = null;
+}
+
+function onDragEnd() {
+  dragIndex.value = null;
+  dragOverIndex.value = null;
+}
+
 function startRename(id: string, current: string) {
   editingId.value = id;
   editDraft.value = current;
@@ -80,14 +111,25 @@ function cancelRename() {
       </p>
       <ul class="space-y-2">
         <li
-          v-for="p in store.projects"
+          v-for="(p, i) in store.projects"
           :key="p.id"
-          class="flex items-center justify-between border-2 border-black rounded px-4 py-3 transition-colors"
+          draggable="true"
+          class="flex items-center justify-between border-2 border-black rounded px-4 py-3 transition-colors cursor-grab active:cursor-grabbing"
+          :class="{
+            'opacity-40': dragIndex === i,
+            'border-dashed ring-2 ring-black':
+              dragOverIndex === i && dragIndex !== i,
+          }"
           :style="{
             background: p.background || '#ffffff',
             color: contrastText(p.background || '#ffffff'),
           }"
+          @dragstart="onDragStart($event, i)"
+          @dragover="onDragOver($event, i)"
+          @drop="onDrop($event, i)"
+          @dragend="onDragEnd"
         >
+          <span class="mr-3 opacity-30 text-lg select-none shrink-0">⠿</span>
           <template v-if="editingId === p.id">
             <input
               v-model="editDraft"

@@ -12,6 +12,7 @@ export interface Project {
   createdAt: number;
   colors: ColorEntry[];
   background?: string;
+  position?: number;
 }
 
 const LEGACY_KEY = "color-sort:projects:v1";
@@ -97,6 +98,13 @@ export const useProjects = defineStore("projects", {
       if (!p) return;
       p.colors = p.colors.filter((c) => c.id !== colorId);
       this._save(p);
+    },
+    reorderProjects(ordered: Project[]) {
+      ordered.forEach((p, index) => {
+        p.position = index;
+      });
+      this.projects = [...ordered];
+      for (const p of ordered) this._save(p);
     },
     setColors(projectId: string, colors: ColorEntry[]) {
       const p = this.byId(projectId);
