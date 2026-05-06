@@ -180,7 +180,7 @@ export const ohuhuPalette: Record<string, string> = {
   Y211: "#D8CC80", // Grayish Yellow
   Y314: "#F2D020", // Yellow
   Y503: "#F8EDD0", // Pale Cream
-  Y608: "#F06820", // Orange
+  Y608: "#A1391D", // Orange
   Y611: "#C87040", // Morin
   Y623: "#A86838", // Potato Brown
   Y823: "#964030", // Henna
